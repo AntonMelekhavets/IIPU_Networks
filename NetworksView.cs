@@ -21,5 +21,10 @@ namespace IIPU_Networks
         {
 
         }
+
+        private void NetworkList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

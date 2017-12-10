@@ -53,6 +53,7 @@
             this.NetworkList.TabIndex = 0;
             this.NetworkList.UseCompatibleStateImageBehavior = false;
             this.NetworkList.View = System.Windows.Forms.View.Details;
+            this.NetworkList.SelectedIndexChanged += new System.EventHandler(this.NetworkList_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
