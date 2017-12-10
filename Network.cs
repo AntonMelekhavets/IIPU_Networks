@@ -7,48 +7,47 @@ using SimpleWifi;
 
 namespace IIPU_Networks
 {
-    class Network
+    internal class Network
     {
         public string Name { get; set; }
         public string SignalStrength { get; set; }
         public string Description { get; set; }
-        public List<string> MAC { get; set; }
+        public List<string> Mac { get; set; }
         public bool IsSecured { get; set; }
         public bool IsConnected { get; set; }
 
-        public Network(string name, string signalStrength, string description, List<string> MACAddress, bool isSecured, bool isConnected)
+        public Network(string name, string signalStrength, string description, List<string> macAddress, bool isSecured, bool isConnected)
         {
             Name = name;
             SignalStrength = signalStrength;
             Description = description;
-            MAC = MACAddress;
+            Mac = macAddress;
             IsSecured = isSecured;
             IsConnected = isConnected;
         }
 
         public bool Connect(string password)
         {
-            Wifi wifi = new Wifi();
-            AccessPoint accessPoint = wifi.GetAccessPoints().FirstOrDefault(x => x.Name.Equals(Name));
+            var wifi = new Wifi();
+            var accessPoint = wifi.GetAccessPoints().FirstOrDefault(x => x.Name.Equals(Name));
             if (accessPoint != null)
             {
-                AuthRequest authRequest = new AuthRequest(accessPoint);
+                var authRequest = new AuthRequest(accessPoint);
                 authRequest.Password = password;
                 return accessPoint.Connect(authRequest);
             }
             return false;
         }
 
-        public string GetMAC()
+        public string GetMac()
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             builder.Append("MAC: ");
-            foreach (var symbol in MAC)
+            foreach (var symbol in Mac)
             {
                 builder.Append(symbol + "\r\n");
             }
             return builder.ToString();
         }
     }
-}
 }

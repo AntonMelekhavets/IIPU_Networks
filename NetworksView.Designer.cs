@@ -35,8 +35,8 @@
             this.NetworkInformation = new System.Windows.Forms.TextBox();
             this.ConnectionButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.PasswordF = new System.Windows.Forms.TextBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.PasswordField = new System.Windows.Forms.TextBox();
+            this.Timer = new System.Windows.Forms.Timer(this.components);
             this.ConnectionStatusL = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -53,7 +53,7 @@
             this.NetworkList.TabIndex = 0;
             this.NetworkList.UseCompatibleStateImageBehavior = false;
             this.NetworkList.View = System.Windows.Forms.View.Details;
-            this.NetworkList.SelectedIndexChanged += new System.EventHandler(this.NetworkList_SelectedIndexChanged);
+            this.NetworkList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NetworkList_MouseClick);
             // 
             // columnHeader1
             // 
@@ -92,17 +92,19 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Password";
             // 
-            // PasswordF
+            // PasswordField
             // 
-            this.PasswordF.Location = new System.Drawing.Point(348, 235);
-            this.PasswordF.Name = "PasswordF";
-            this.PasswordF.PasswordChar = '*';
-            this.PasswordF.Size = new System.Drawing.Size(146, 20);
-            this.PasswordF.TabIndex = 4;
+            this.PasswordField.Location = new System.Drawing.Point(348, 235);
+            this.PasswordField.Name = "PasswordField";
+            this.PasswordField.PasswordChar = '*';
+            this.PasswordField.Size = new System.Drawing.Size(146, 20);
+            this.PasswordField.TabIndex = 4;
+            this.PasswordField.TextChanged += new System.EventHandler(this.PasswordField_Click);
             // 
-            // timer1
+            // Timer
             // 
-            this.timer1.Interval = 5000;
+            this.Timer.Interval = 3000;
+            this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // ConnectionStatusL
             // 
@@ -118,13 +120,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(505, 315);
             this.Controls.Add(this.ConnectionStatusL);
-            this.Controls.Add(this.PasswordF);
+            this.Controls.Add(this.PasswordField);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ConnectionButton);
             this.Controls.Add(this.NetworkInformation);
             this.Controls.Add(this.NetworkList);
             this.Name = "NetworksView";
             this.Text = "NetworksView";
+            this.Load += new System.EventHandler(this.NetworkView_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -138,8 +141,8 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox PasswordF;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TextBox PasswordField;
+        private System.Windows.Forms.Timer Timer;
         private System.Windows.Forms.Label ConnectionStatusL;
     }
 }
