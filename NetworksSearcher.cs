@@ -40,14 +40,15 @@ namespace IIPU_Networks
         {
             var wlanInterface = _wlanClient.Interfaces.FirstOrDefault();
             return wlanInterface?.GetNetworkBssList()
-                .Where(x => Encoding.ASCII.GetString(x.dot11Ssid.SSID, 0, (int)x.dot11Ssid.SSIDLength).Equals(accessPoint.Name))
+                .Where(x => Encoding.ASCII.GetString(x.dot11Ssid.SSID, 0, (int) x.dot11Ssid.SSIDLength)
+                    .Equals(accessPoint.Name))
                 .Select(y => MacToString(y)).ToList();
         }
 
         private string MacToString(Wlan.WlanBssEntry entry)
         {
             var macBuilder = new StringBuilder();
-            foreach (byte mByte in entry.dot11Bssid)
+            foreach (var mByte in entry.dot11Bssid)
             {
                 macBuilder.Append(mByte.ToString("X"));
                 macBuilder.Append("-");

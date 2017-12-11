@@ -38,6 +38,7 @@
             this.PasswordField = new System.Windows.Forms.TextBox();
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.ConnectionStatusL = new System.Windows.Forms.Label();
+            this.DisconnectButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // NetworkList
@@ -75,11 +76,11 @@
             // 
             // ConnectionButton
             // 
-            this.ConnectionButton.Location = new System.Drawing.Point(372, 261);
+            this.ConnectionButton.Location = new System.Drawing.Point(348, 261);
             this.ConnectionButton.Name = "ConnectionButton";
-            this.ConnectionButton.Size = new System.Drawing.Size(75, 23);
+            this.ConnectionButton.Size = new System.Drawing.Size(64, 23);
             this.ConnectionButton.TabIndex = 2;
-            this.ConnectionButton.Text = "Connection";
+            this.ConnectionButton.Text = "Connect";
             this.ConnectionButton.UseVisualStyleBackColor = true;
             this.ConnectionButton.Click += new System.EventHandler(this.ConnectionButton_Click);
             // 
@@ -99,11 +100,10 @@
             this.PasswordField.PasswordChar = '*';
             this.PasswordField.Size = new System.Drawing.Size(146, 20);
             this.PasswordField.TabIndex = 4;
-            this.PasswordField.TextChanged += new System.EventHandler(this.PasswordField_Click);
             // 
             // Timer
             // 
-            this.Timer.Interval = 3000;
+            this.Timer.Interval = 7000;
             this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // ConnectionStatusL
@@ -114,11 +114,23 @@
             this.ConnectionStatusL.Size = new System.Drawing.Size(0, 13);
             this.ConnectionStatusL.TabIndex = 5;
             // 
+            // DisconnectButton
+            // 
+            this.DisconnectButton.Enabled = false;
+            this.DisconnectButton.Location = new System.Drawing.Point(419, 261);
+            this.DisconnectButton.Name = "DisconnectButton";
+            this.DisconnectButton.Size = new System.Drawing.Size(75, 23);
+            this.DisconnectButton.TabIndex = 6;
+            this.DisconnectButton.Text = "Disconnect";
+            this.DisconnectButton.UseVisualStyleBackColor = true;
+            this.DisconnectButton.Click += new System.EventHandler(this.DisconnectButton_Click);
+            // 
             // NetworksView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(505, 315);
+            this.Controls.Add(this.DisconnectButton);
             this.Controls.Add(this.ConnectionStatusL);
             this.Controls.Add(this.PasswordField);
             this.Controls.Add(this.label1);
@@ -144,6 +156,7 @@
         private System.Windows.Forms.TextBox PasswordField;
         private System.Windows.Forms.Timer Timer;
         private System.Windows.Forms.Label ConnectionStatusL;
+        private System.Windows.Forms.Button DisconnectButton;
     }
 }
 

@@ -16,7 +16,8 @@ namespace IIPU_Networks
         public bool IsSecured { get; set; }
         public bool IsConnected { get; set; }
 
-        public Network(string name, string signalStrength, string description, List<string> macAddress, bool isSecured, bool isConnected)
+        public Network(string name, string signalStrength, string description, List<string> macAddress, bool isSecured,
+            bool isConnected)
         {
             Name = name;
             SignalStrength = signalStrength;
@@ -37,6 +38,12 @@ namespace IIPU_Networks
                 return accessPoint.Connect(authRequest);
             }
             return false;
+        }
+
+        public void Disconnect()
+        {
+            var wifi = new Wifi();
+            wifi.Disconnect();
         }
 
         public string GetMac()

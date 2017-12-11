@@ -14,7 +14,8 @@ namespace IIPU_Networks
     {
         private readonly NetworksSearcher _searcher = new NetworksSearcher();
         private List<Network> _networks;
-        private bool _connection = false;
+        private bool _connection;
+        private Network _currentNetwork;
 
         public NetworksView()
         {
@@ -24,18 +25,25 @@ namespace IIPU_Networks
         private void NetworkView_Load(object sender, EventArgs e)
         {
             RefreshNetworkList();
-            ConnectionButton.Enabled = false;
-            PasswordField.Enabled = false;
             Timer.Enabled = true;
         }
 
         private void RefreshNetworkList()
         {
+            _connection = false;
             _networks = _searcher.GetNetworks();
             NetworkList.Items.Clear();
             foreach (var network in _networks)
             {
                 var item = new ListViewItem(network.Name);
+                if (network.IsConnected)
+                {
+                    _connection = true;
+                    PasswordField.Enabled = false;
+                    ConnectionButton.Enabled = false;
+                    DisconnectButton.Enabled = true;
+                    _currentNetwork = network;
+                }
                 item.SubItems.Add(network.SignalStrength);
                 NetworkList.Items.Add(item);
             }
@@ -43,20 +51,17 @@ namespace IIPU_Networks
 
         private void NetworkList_MouseClick(object sender, MouseEventArgs e)
         {
-            var network = _networks[NetworkList.SelectedItems[0].Index];
-            NetworkInformation.Text = network.Description + network.GetMac();
-            if (network.IsConnected)
+            _currentNetwork = _networks[NetworkList.SelectedItems[0].Index];
+            NetworkInformation.Text = _currentNetwork.Description + _currentNetwork.GetMac();
+            if (_connection)
             {
                 ConnectionStatusL.Text = @"Connected";
-                PasswordField.Enabled = false;
-                PasswordField.Clear();
-                ConnectionButton.Enabled = false;
             }
             else
             {
                 ConnectionStatusL.Text = @"Available";
-                PasswordField.Enabled = network.IsSecured;
-                ConnectionButton.Enabled = true;
+                PasswordField.Enabled = _currentNetwork.IsSecured;
+                PasswordField.Clear();
             }
         }
 
@@ -64,32 +69,36 @@ namespace IIPU_Networks
         {
             if (PasswordField.Text.Length > 0)
             {
-                if (_networks[NetworkList.SelectedItems[0].Index].Connect(PasswordField.Text))
+                if (_currentNetwork.Connect(PasswordField.Text))
                 {
                     ConnectionStatusL.Text = @"Connected";
                     PasswordField.Enabled = false;
                     ConnectionButton.Enabled = false;
-                    NetworkList.SelectedItems[0].Selected = false;
+                    DisconnectButton.Enabled = true;
                 }
                 else
                 {
                     ConnectionStatusL.Text = @"Error";
                 }
             }
-            _connection = false;
+            _connection = true;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (!_connection)
-            {
-                RefreshNetworkList();
-            }
+            RefreshNetworkList();
         }
 
-        private void PasswordField_Click(object sender, EventArgs e)
+        private void DisconnectButton_Click(object sender, EventArgs e)
         {
-            _connection = true;
+            _currentNetwork.Disconnect();
+            _connection = false;
+            DisconnectButton.Enabled = false;
+            ConnectionButton.Enabled = true;
+            PasswordField.Clear();
+            PasswordField.Enabled = true;
+            Timer.Stop();
+            Timer.Start();
         }
     }
 }
